@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements DateFragment.OnDateSelected {
+public class MainActivity extends AppCompatActivity implements DateFragment.OnDateSelected, TimeFragment.OnTimePickedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements DateFragment.OnDa
     }
 
     public void setTime(View view) {
+        TimeFragment timeFragment = new TimeFragment();
+        timeFragment.setListener(this);
+
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.container, timeFragment).
+                commit();
     }
 
     public void setMessage(View view) {
@@ -61,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements DateFragment.OnDa
     @Override
     public void onDateSelected(int day, int month, int year) {
         Toast.makeText(this, day + " " + month + " " + year, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onTimePicked(int hour, int minute) {
+        Toast.makeText(this, hour + " " + minute , Toast.LENGTH_SHORT).show();
 
     }
 }
